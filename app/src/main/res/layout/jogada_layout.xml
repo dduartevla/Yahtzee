@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewPontos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#3E748C"
@@ -31,22 +31,22 @@
         tools:layout_editor_absoluteX="168dp" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxJogar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:text="Jogar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewPontos"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewCalculoPontos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textStyle="italic"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewPontos"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxJogar"
+        app:layout_constraintStart_toEndOf="@+id/textViewPontos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
