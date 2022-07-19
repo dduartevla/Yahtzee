@@ -4,7 +4,7 @@ public class Jogada {
     private final String nome;
     private int pontos;
 
-    public Jogada (String nome, int pontos){
+    public Jogada (String nome){
         this.nome = nome;
         this.pontos = 0;
     }
