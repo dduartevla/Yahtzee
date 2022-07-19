@@ -34,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        //recyclerViewDados.setLayoutManager(layoutManager);
-        recyclerViewJogadas.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManagerJogada = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManagerDados = new LinearLayoutManager(this);
+        recyclerViewDados.setLayoutManager(layoutManagerDados);
+        recyclerViewJogadas.setLayoutManager(layoutManagerJogada);
         jogadaAdapter = new JogadaAdapter(jogadas,listener);
         recyclerViewJogadas.setAdapter(jogadaAdapter);
     }

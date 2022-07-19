@@ -26,8 +26,8 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
     public JogadaAdapter.JogadaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context contexto = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(contexto);
-        View avistamentoView = inflater.inflate(R.layout.jogada_layout,parent,false);
-        JogadaViewHolder viewHolder = new JogadaViewHolder(avistamentoView);
+        View jogadaView = inflater.inflate(R.layout.jogada_layout,parent,false);
+        JogadaViewHolder viewHolder = new JogadaViewHolder(jogadaView);
         return viewHolder;
     }
 
