@@ -2,7 +2,7 @@ package ufjf.dcc.debora.yahtzee;
 
 public class Jogada {
     private final String nome;
-    private int pontos;
+    private Integer pontos;
 
     public Jogada (String nome){
         this.nome = nome;
@@ -13,11 +13,11 @@ public class Jogada {
         return nome;
     }
 
-    public int getPontos() {
+    public Integer getPontos() {
         return pontos;
     }
 
-    public void setPontos(int pontos) {
+    public void setPontos(Integer pontos) {
         this.pontos = pontos;
     }
 }

@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private int[] dados;
     private List<Jogada> jogadas;
     private JogadasRepositorio repo;
+    JogadaAdapter jogadaAdapter;
+    JogadaAdapter.OnJogadaClickListener listener;
 
 
     @SuppressLint("WrongViewCast")
@@ -33,25 +35,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerViewDados.setLayoutManager(layoutManager);
+        //recyclerViewDados.setLayoutManager(layoutManager);
         recyclerViewJogadas.setLayoutManager(layoutManager);
+        jogadaAdapter = new JogadaAdapter(jogadas,listener);
+        recyclerViewJogadas.setAdapter(jogadaAdapter);
     }
 
     public void criaJogadas(){
         jogadas = new ArrayList<Jogada>();
 
-        jogadas.add(new Jogada("Jogada de 1"));
-        jogadas.add(new Jogada("Jogada de 2"));
-        jogadas.add(new Jogada("Jogada de 3"));
-        jogadas.add(new Jogada("Jogada de 4"));
-        jogadas.add(new Jogada("Jogada de 5"));
-        jogadas.add(new Jogada("Jogada de 6"));
-        jogadas.add(new Jogada("Trinca"));
-        jogadas.add(new Jogada("Quadra"));
-        jogadas.add(new Jogada("Full-House"));
-        jogadas.add(new Jogada("Sequencia Alta"));
-        jogadas.add(new Jogada("Sequencia Baixa"));
-        jogadas.add(new Jogada("General"));
+        jogadas.add(new Jogada("Jogada de 1: "));
+        jogadas.add(new Jogada("Jogada de 2: "));
+        jogadas.add(new Jogada("Jogada de 3: "));
+        jogadas.add(new Jogada("Jogada de 4: "));
+        jogadas.add(new Jogada("Jogada de 5: "));
+        jogadas.add(new Jogada("Jogada de 6: "));
+        jogadas.add(new Jogada("Trinca: "));
+        jogadas.add(new Jogada("Quadra: "));
+        jogadas.add(new Jogada("Full-House: "));
+        jogadas.add(new Jogada("Sequencia Alta: "));
+        jogadas.add(new Jogada("Sequencia Baixa: "));
+        jogadas.add(new Jogada("General: "));
 
     }
 }

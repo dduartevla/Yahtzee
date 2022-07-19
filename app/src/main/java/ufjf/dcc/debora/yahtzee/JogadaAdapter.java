@@ -16,8 +16,8 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
     private List<Jogada> jogadas;
     private OnJogadaClickListener listener;
 
-    public JogadaAdapter(List<Jogada> avistamentos, OnJogadaClickListener listener) {
-        this.jogadas = avistamentos;
+    public JogadaAdapter(List<Jogada> jogadas, OnJogadaClickListener listener) {
+        this.jogadas = jogadas;
         this.listener = listener;
     }
 
@@ -34,8 +34,8 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
     @Override
     public void onBindViewHolder(@NonNull JogadaAdapter.JogadaViewHolder holder, int position) {
         Jogada jogada = jogadas.get(position);
-        holder.textViewJogadaNome.setText(jogada.getNome());
-        holder.textViewPontos.setText(jogada.getPontos());
+        holder.textViewJogadaNome.setText(jogada.getNome().toString());
+        holder.textViewPontos.setText(jogada.getPontos().toString());
 
     }
 
