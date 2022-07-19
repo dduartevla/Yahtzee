@@ -14,11 +14,13 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewJogadas;
     private RecyclerView recyclerViewDados;
-    private int[] dados;
+    private List<Integer> dados;
     private List<Jogada> jogadas;
     private JogadasRepositorio repo;
     JogadaAdapter jogadaAdapter;
-    JogadaAdapter.OnJogadaClickListener listener;
+    JogadaAdapter.OnJogadaClickListener listenerJogadas;
+    DadosAdapter dadosAdapter;
+    DadosAdapter.OnDadosClickListener listenerDados;
 
 
     @SuppressLint("WrongViewCast")
@@ -30,16 +32,28 @@ public class MainActivity extends AppCompatActivity {
         criaJogadas();
 
         repo = new JogadasRepositorio(getApplicationContext());
-        dados = new int[5];
+        dados = new ArrayList<Integer>();
+        iniciaDados();
+        System.out.println(dados.size());
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
 
         LinearLayoutManager layoutManagerJogada = new LinearLayoutManager(this);
+        recyclerViewJogadas.setLayoutManager(layoutManagerJogada);
+        jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
+        recyclerViewJogadas.setAdapter(jogadaAdapter);
+
         LinearLayoutManager layoutManagerDados = new LinearLayoutManager(this);
         recyclerViewDados.setLayoutManager(layoutManagerDados);
-        recyclerViewJogadas.setLayoutManager(layoutManagerJogada);
-        jogadaAdapter = new JogadaAdapter(jogadas,listener);
-        recyclerViewJogadas.setAdapter(jogadaAdapter);
+        dadosAdapter = new DadosAdapter(dados,listenerDados);
+        recyclerViewDados.setAdapter(dadosAdapter);
+
+    }
+
+    public void iniciaDados(){
+        for (int i=0; i<5;i++){
+            dados.add(1);
+        }
     }
 
     public void criaJogadas(){

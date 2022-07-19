@@ -3,20 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageViewDado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/imageViewDado1"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewDado2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDado2"
+        app:srcCompat="@drawable/d1" />
+
+    <ImageView
+        android:id="@+id/imageViewDado2"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewDado3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDado1"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDado3"
+        app:srcCompat="@drawable/d1" />
+
+    <ImageView
+        android:id="@+id/imageViewDado3"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewDado5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDado2"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/d1" />
+
+    <ImageView
+        android:id="@+id/imageViewDado4"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDado5"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDado5"
+        app:srcCompat="@drawable/d1" />
+
+    <ImageView
+        android:id="@+id/imageViewDado5"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewDado4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDado3"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDado3"
         app:srcCompat="@drawable/d1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
