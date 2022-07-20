@@ -21,6 +21,10 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         this.listener = listener;
     }
 
+    public void setListener(OnJogadaClickListener listener){
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public JogadaAdapter.JogadaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,7 +40,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         Jogada jogada = jogadas.get(position);
         holder.textViewJogadaNome.setText(jogada.getNome().toString());
         holder.textViewPontos.setText(jogada.getPontos().toString());
-        holder.textViewCalculaPontos.setText(jogada.getVisualisaPontos().toString());
+        holder.textViewCalculaPontos.setText(" + " + jogada.getVisualisaPontos().toString());
 
     }
 
@@ -69,8 +73,14 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
             itemView.findViewById(R.id.buttonJogar).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onCheckBoxClick(v,getAdapterPosition());
-                    buttonJogar.setClickable(false);
+                    //try {
+                        listener.onJogarClick(v, getAdapterPosition());
+                        buttonJogar.setEnabled(false);
+                    //} catch (Exception e){
+                        if (listener == null){
+                            System.out.println("Listener é null.");
+                        }
+                    //}
                 }
             });
         }
@@ -78,7 +88,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
 
     public interface OnJogadaClickListener{
         void onJogadaClick(View view,int position);
-        void onCheckBoxClick(View view, int position);
+        void onJogarClick(View view, int position);
     }
 }
 

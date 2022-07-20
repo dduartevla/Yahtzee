@@ -79,7 +79,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCheckBoxClick(View view, int position) {
+            public void onJogarClick(View view, int position) {
+
+                contadorLancamentos = 0;
+
+                System.out.println("Na main");
+
 
                 switch (position){
                     case 0:
@@ -143,9 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                jogadaAdapter.notifyDataSetChanged();
-                recyclerViewJogadas.setAdapter(jogadaAdapter);
-
+                jogadaAdapter.notifyItemChanged(position);
 
             }
         };
@@ -244,8 +247,9 @@ public class MainActivity extends AppCompatActivity {
             jogadas.get(11).setVisualisaPontos(general);
 
             //apresenta os pontos para visualização para o usuário
-            jogadaAdapter = new JogadaAdapter(jogadas, listenerJogadas);
-            recyclerViewJogadas.setAdapter(jogadaAdapter);
+            for (int i=0; i<jogadas.size(); i++){
+                jogadaAdapter.notifyItemChanged(i);
+            }
         }
     }
 
