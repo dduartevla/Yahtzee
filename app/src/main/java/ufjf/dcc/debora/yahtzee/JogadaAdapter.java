@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,14 +50,14 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         private TextView textViewJogadaNome;
         private TextView textViewPontos;
         private TextView textViewCalculaPontos;
-        private CheckBox checkBoxJogar;
+        private Button buttonJogar;
 
         public JogadaViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewJogadaNome = itemView.findViewById(R.id.textViewJogadaNome);
             textViewPontos = itemView.findViewById(R.id.textViewPontos);
             textViewCalculaPontos = itemView.findViewById(R.id.textViewCalculoPontos);
-            checkBoxJogar = itemView.findViewById(R.id.checkBoxJogar);
+            buttonJogar = itemView.findViewById(R.id.buttonJogar);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,10 +66,11 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
                 }
             });
 
-            itemView.findViewById(R.id.checkBoxJogar).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.buttonJogar).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onCheckBoxClick(v,getAdapterPosition());
+                    buttonJogar.setClickable(false);
                 }
             });
         }

@@ -143,8 +143,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                jogadaAdapter = new JogadaAdapter(jogadas, listenerJogadas);
+                jogadaAdapter.notifyDataSetChanged();
                 recyclerViewJogadas.setAdapter(jogadaAdapter);
+
 
             }
         };
