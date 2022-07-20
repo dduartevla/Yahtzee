@@ -22,6 +22,8 @@ public class JogadasRepositorio {
     private final String SEQUENCIA_BAIXA_KEY = "SEQUENCIA_BAIXA_KEY";
     private final String SEQUENCIA_ALTA_KEY = "SEQUENCIA_ALTA_KEY";
     private final String GENERAL_KEY = "GENERAL_KEY";
+    private final String PONTOS_KEY = "PONTOS_KEY";
+    private final String NOME_JOGADOR_KEY = "NOME_JOGADOR_KEY";
 
 
     //esquece vou ter que fazer uma por uma
@@ -80,7 +82,27 @@ public class JogadasRepositorio {
         return preferences.getInt(GENERAL_KEY,0);
     }
 
+    public Integer getPontos() {return preferences.getInt(PONTOS_KEY,0);}
+
+    public String getNome() {return preferences.getString(NOME_JOGADOR_KEY, " ");}
+
+
+
     //Sets
+
+    public void setNome(String nome){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(NOME_JOGADOR_KEY, nome);
+        editor.apply();
+        editor.apply();
+    }
+
+    public void incPontos(int pontos){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PONTOS_KEY, getPontos()+pontos);
+        editor.apply();
+        editor.apply();
+    }
 
     public void setJogadaDeUm(Integer pontos){
         SharedPreferences.Editor editor = preferences.edit();

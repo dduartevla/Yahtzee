@@ -36,6 +36,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         Jogada jogada = jogadas.get(position);
         holder.textViewJogadaNome.setText(jogada.getNome().toString());
         holder.textViewPontos.setText(jogada.getPontos().toString());
+        holder.textViewCalculaPontos.setText(jogada.getVisualisaPontos().toString());
 
     }
 

@@ -43,7 +43,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     private void setImageViewDado1(@NonNull DadosAdapter.DadosViewHolder holder,int num){
-        switch (dados.get(num)){
+        switch (num){
             case 1:
                 holder.imageViewDado1.setImageResource(R.drawable.d1);
                 break;
@@ -72,7 +72,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     private void setImageViewDado2(@NonNull DadosAdapter.DadosViewHolder holder,int num){
-        switch (dados.get(num)){
+        switch (num){
             case 1:
                 holder.imageViewDado2.setImageResource(R.drawable.d1);
                 break;
@@ -101,7 +101,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     private void setImageViewDado3(@NonNull DadosAdapter.DadosViewHolder holder,int num){
-        switch (dados.get(num)){
+        switch (num){
             case 1:
                 holder.imageViewDado3.setImageResource(R.drawable.d1);
                 break;
@@ -130,7 +130,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     private void setImageViewDado4(@NonNull DadosAdapter.DadosViewHolder holder,int num){
-        switch (dados.get(num)){
+        switch (num){
             case 1:
                 holder.imageViewDado4.setImageResource(R.drawable.d1);
                 break;
@@ -159,7 +159,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     private void setImageViewDado5(@NonNull DadosAdapter.DadosViewHolder holder,int num){
-        switch (dados.get(num)){
+        switch (num){
             case 1:
                 holder.imageViewDado5.setImageResource(R.drawable.d1);
                 break;

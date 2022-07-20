@@ -2,26 +2,34 @@ package ufjf.dcc.debora.yahtzee;
 
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class CalculaJogadas {
 
+    int[] dados = new int[5];
 
-    public CalculaJogadas(){ }
+    public CalculaJogadas(List<Integer> Ldados){
+        for (int i=0; i<Ldados.size();i++){
+            this.dados[i] = Ldados.get(i);
+        }
 
-    public int jogadaNum( int[] dados, int num){
+    }
+
+    public int jogadaNum(int num){
+
         int resultado = 0;
 
         for (int i=0; i<dados.length; i++){
             if (dados[i] == num){
-                resultado++;
+                resultado+=num;
             }
         }
 
         return resultado;
     }
 
-    public int trinca(int[] dados){
+    public int trinca(){
 
         for (int num=1; num<7;num++){
             int cont = 0;
@@ -43,7 +51,8 @@ public class CalculaJogadas {
         return 0;
     }
 
-    public int quadra(int[] dados){
+    public int quadra(){
+
         for (int num=1; num<7;num++){
             int cont = 0;
             for (int i=0; i<dados.length; i++){
@@ -64,9 +73,9 @@ public class CalculaJogadas {
         return 0;
     }
 
-    public int fullHouse(int[] dados){
+    public int fullHouse(){
 
-        if (trinca(dados) != 0){
+        if (trinca() != 0){
 
             //os dois numeros diferentes do número da trinca
             int primeiro = -1;
@@ -103,7 +112,7 @@ public class CalculaJogadas {
 
     }
 
-    public int sequenciaBaixa(int[] dados){
+    public int sequenciaBaixa(){
 
         int[] auxdados = dados;
         Arrays.sort(auxdados);
@@ -119,13 +128,13 @@ public class CalculaJogadas {
         return 40;
     }
 
-    public int sequenciaAlta(int[] dados){
+    public int sequenciaAlta(){
         int[] auxdados = dados;
         Arrays.sort(auxdados);
 
         int prox;
         for (int i=0; i< auxdados.length; i++){
-            System.out.println(auxdados[i]);
+            //System.out.println(auxdados[i]);
             prox = i;
             if (auxdados[i] != prox+2){
                 return 0;
@@ -134,10 +143,11 @@ public class CalculaJogadas {
         return 40;
     }
 
-    public int general(int[] dados){
+    public int general(){
         int num = dados[0];
-
+        //System.out.println(dados[0] + "dados[0]");
         for (int i=0; i<dados.length;i++){
+            //System.out.println(dados[i] + "dados["+i+"]");
             if (dados[i] != num){
                 return 0;
             }
