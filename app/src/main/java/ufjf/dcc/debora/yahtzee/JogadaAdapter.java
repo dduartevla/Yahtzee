@@ -15,6 +15,9 @@ import java.util.List;
 public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaViewHolder>{
     private List<Jogada> jogadas;
     private OnJogadaClickListener listener;
+    JogadaViewHolder viewHolder;
+    View jogadaView;
+    private boolean clickable = true;
 
     public JogadaAdapter(List<Jogada> jogadas, OnJogadaClickListener listener) {
         this.jogadas = jogadas;
@@ -30,18 +33,34 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
     public JogadaAdapter.JogadaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context contexto = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(contexto);
-        View jogadaView = inflater.inflate(R.layout.jogada_layout,parent,false);
-        JogadaViewHolder viewHolder = new JogadaViewHolder(jogadaView);
+        jogadaView = inflater.inflate(R.layout.jogada_layout,parent,false);
+        viewHolder = new JogadaViewHolder(jogadaView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull JogadaAdapter.JogadaViewHolder holder, int position) {
+
         Jogada jogada = jogadas.get(position);
         holder.textViewJogadaNome.setText(jogada.getNome().toString());
         holder.textViewPontos.setText(jogada.getPontos().toString());
         holder.textViewCalculaPontos.setText(" + " + jogada.getVisualisaPontos().toString());
 
+        if (!clickable){
+            viewHolder.itemView.setClickable(false);
+        } else {
+            viewHolder.itemView.setClickable(true);
+        }
+
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
+        this.notifyDataSetChanged();
+    }
+
+    public boolean getClickable(){
+        return this.clickable;
     }
 
     @Override
@@ -54,41 +73,33 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         private TextView textViewJogadaNome;
         private TextView textViewPontos;
         private TextView textViewCalculaPontos;
-        private Button buttonJogar;
 
         public JogadaViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewJogadaNome = itemView.findViewById(R.id.textViewJogadaNome);
             textViewPontos = itemView.findViewById(R.id.textViewPontos);
             textViewCalculaPontos = itemView.findViewById(R.id.textViewCalculoPontos);
-            buttonJogar = itemView.findViewById(R.id.buttonJogar);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onJogadaClick(v,getAdapterPosition());
+
+                }
+
+                public void desabilita(View v){
+                    listener.setCliclableView(v, getAdapterPosition());
                 }
             });
 
-            itemView.findViewById(R.id.buttonJogar).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //try {
-                        listener.onJogarClick(v, getAdapterPosition());
-                        buttonJogar.setEnabled(false);
-                    //} catch (Exception e){
-                        if (listener == null){
-                            System.out.println("Listener é null.");
-                        }
-                    //}
-                }
-            });
+
+
         }
     }
 
     public interface OnJogadaClickListener{
         void onJogadaClick(View view,int position);
-        void onJogarClick(View view, int position);
+        void setCliclableView(View view, int position);
     }
 }
 

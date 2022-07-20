@@ -21,7 +21,7 @@
         android:id="@+id/textViewPontos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="40dp"
         android:background="#3E748C"
         android:padding="2sp"
         android:text="00"
@@ -29,26 +29,18 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewJogadaNome"
-        app:layout_constraintEnd_toStartOf="@+id/textViewCalculoPontos" />
-
-    <Button
-        android:id="@+id/buttonJogar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="Jogar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewCalculoPontos"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/textViewCalculoPontos"
+        app:layout_constraintStart_toEndOf="@+id/textViewJogadaNome" />
 
     <TextView
         android:id="@+id/textViewCalculoPontos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:text="+ 00"
         android:textSize="20sp"
         android:textStyle="italic"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewPontos"
-        app:layout_constraintEnd_toStartOf="@+id/buttonJogar" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

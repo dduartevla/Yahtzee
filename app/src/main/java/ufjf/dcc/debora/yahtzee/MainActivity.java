@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManagerJogada;
     LinearLayoutManager layoutManagerDados;
 
+    boolean[] viewClicked;
+
     // pontos das jogadas
     int jogadaDeUm;
     int jogadaDeDois;
@@ -50,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewClicked = new boolean[13];
+        iniciaViewClicked();
+
         buttonLancar = findViewById(R.id.buttonLancar);
-
-
 
         repo = new JogadasRepositorio(getApplicationContext());
         criaJogadas();
@@ -64,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         layoutManagerJogada = new LinearLayoutManager(this);
         recyclerViewJogadas.setLayoutManager(layoutManagerJogada);
-        jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
-        recyclerViewJogadas.setAdapter(jogadaAdapter);
+
 
         layoutManagerDados = new LinearLayoutManager(this);
         recyclerViewDados.setLayoutManager(layoutManagerDados);
@@ -76,87 +78,99 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onJogadaClick(View view, int position) {
 
+                contadorLancamentos = 0;
+
+                if (viewClicked[position] == true){ // impede mais de um clicque na mesma jogada
+                    //lançar mensagem para usuário aqui
+                } else {
+                    viewClicked[position] = true;
+
+                    switch (position) {
+                        case 0:
+                            jogadas.get(position).setPontos(jogadaDeUm);
+                            repo.setJogadaDeUm(jogadaDeUm);
+                            break;
+
+                        case 1:
+                            jogadas.get(position).setPontos(jogadaDeDois);
+                            repo.setJogadaDeDois(jogadaDeDois);
+                            break;
+
+                        case 2:
+                            jogadas.get(position).setPontos(jogadaDeTres);
+                            repo.setJogadaDeTres(jogadaDeTres);
+                            break;
+
+                        case 3:
+                            jogadas.get(position).setPontos(jogadaDeQuatro);
+                            repo.setJogadaDeQuatro(jogadaDeQuatro);
+                            break;
+
+                        case 4:
+                            jogadas.get(position).setPontos(jogadaDeCinco);
+                            repo.setJogadaDeCinco(jogadaDeCinco);
+                            break;
+
+                        case 5:
+                            jogadas.get(position).setPontos(jogadaDeSeis);
+                            repo.setJogadaDeSeis(jogadaDeSeis);
+                            break;
+
+                        case 6:
+                            jogadas.get(position).setPontos(trinca);
+                            repo.setTrinca(trinca);
+                            break;
+
+                        case 7:
+                            jogadas.get(position).setPontos(quadra);
+                            repo.setQuadra(quadra);
+                            break;
+
+                        case 8:
+                            jogadas.get(position).setPontos(fullhouse);
+                            repo.setFullhouse(fullhouse);
+                            break;
+
+                        case 9:
+                            jogadas.get(position).setPontos(sequenciaAlta);
+                            repo.setSequenciaAlta(sequenciaAlta);
+                            break;
+
+                        case 10:
+                            jogadas.get(position).setPontos(sequenciaBaixa);
+                            repo.setSequenciaBaixa(sequenciaBaixa);
+                            break;
+
+                        case 11:
+                            jogadas.get(position).setPontos(general);
+                            repo.setGeneral(general);
+                            break;
+                    }
+                    jogadaAdapter.notifyItemChanged(position);
+                    jogadaAdapter.setClickable(false);
+                }
+
             }
 
             @Override
-            public void onJogarClick(View view, int position) {
-
-                contadorLancamentos = 0;
-
-                System.out.println("Na main");
-
-
-                switch (position){
-                    case 0:
-                        jogadas.get(position).setPontos(jogadaDeUm);
-                        repo.setJogadaDeUm(jogadaDeUm);
-                        break;
-
-                    case 1:
-                        jogadas.get(position).setPontos(jogadaDeDois);
-                        repo.setJogadaDeDois(jogadaDeDois);
-                        break;
-
-                    case 2:
-                        jogadas.get(position).setPontos(jogadaDeTres);
-                        repo.setJogadaDeTres(jogadaDeTres);
-                        break;
-
-                    case 3:
-                        jogadas.get(position).setPontos(jogadaDeQuatro);
-                        repo.setJogadaDeQuatro(jogadaDeQuatro);
-                        break;
-
-                    case 4:
-                        jogadas.get(position).setPontos(jogadaDeCinco);
-                        repo.setJogadaDeCinco(jogadaDeCinco);
-                        break;
-
-                    case 5:
-                        jogadas.get(position).setPontos(jogadaDeSeis);
-                        repo.setJogadaDeSeis(jogadaDeSeis);
-                        break;
-
-                    case 6:
-                        jogadas.get(position).setPontos(trinca);
-                        repo.setTrinca(trinca);
-                        break;
-
-                    case 7:
-                        jogadas.get(position).setPontos(quadra);
-                        repo.setQuadra(quadra);
-                        break;
-
-                    case 8:
-                        jogadas.get(position).setPontos(fullhouse);
-                        repo.setFullhouse(fullhouse);
-                        break;
-
-                    case 9:
-                        jogadas.get(position).setPontos(sequenciaAlta);
-                        repo.setSequenciaAlta(sequenciaAlta);
-                        break;
-
-                    case 10:
-                        jogadas.get(position).setPontos(sequenciaBaixa);
-                        repo.setSequenciaBaixa(sequenciaBaixa);
-                        break;
-
-                    case 11:
-                        jogadas.get(position).setPontos(general);
-                        repo.setGeneral(general);
-                        break;
-                }
-
-                jogadaAdapter.notifyItemChanged(position);
+            public void setCliclableView(View view, int position) {
 
             }
+
         };
 
+        jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
+        recyclerViewJogadas.setAdapter(jogadaAdapter);
 
     }
 
-    public void iniciaDados(){
+    private void iniciaViewClicked(){
+        for (int i=0; i<viewClicked.length; i++){
+            viewClicked[i] = false;
+        }
+    }
+
+    private void iniciaDados(){
         for (int i=0; i<5;i++){
             dados.add(1);
         }
@@ -189,6 +203,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lancar(View view){
+
+        if (jogadaAdapter.getClickable() == false){
+            jogadaAdapter.setClickable(true);
+        }
+
         if (contadorLancamentos <3) {
             contadorLancamentos++;
 
@@ -250,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i=0; i<jogadas.size(); i++){
                 jogadaAdapter.notifyItemChanged(i);
             }
+
         }
     }
 
