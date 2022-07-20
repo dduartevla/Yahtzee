@@ -119,7 +119,7 @@ public class CalculaJogadas {
 
         int prox;
         for (int i=0; i< auxdados.length; i++){
-            System.out.println(auxdados[i]);
+            //System.out.println(auxdados[i]);
             prox = i;
             if (auxdados[i] != prox+1){
                 return 0;

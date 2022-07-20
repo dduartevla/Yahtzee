@@ -28,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManagerJogada;
     LinearLayoutManager layoutManagerDados;
 
+    // pontos das jogadas
+    int jogadaDeUm;
+    int jogadaDeDois;
+    int jogadaDeTres;
+    int jogadaDeQuatro;
+    int jogadaDeCinco;
+    int jogadaDeSeis;
+    int trinca;
+    int quadra;
+    int fullhouse;
+    int sequenciaAlta;
+    int sequenciaBaixa;
+    int general;
+
+    int contadorLancamentos = 0;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -37,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         buttonLancar = findViewById(R.id.buttonLancar);
 
-        criaJogadas();
+
 
         repo = new JogadasRepositorio(getApplicationContext());
+        criaJogadas();
         dados = new ArrayList<Integer>();
         iniciaDados();
         System.out.println(dados.size());
@@ -55,6 +71,84 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewDados.setLayoutManager(layoutManagerDados);
         dadosAdapter = new DadosAdapter(dados,listenerDados);
         recyclerViewDados.setAdapter(dadosAdapter);
+
+        listenerJogadas = new JogadaAdapter.OnJogadaClickListener() {
+            @Override
+            public void onJogadaClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onCheckBoxClick(View view, int position) {
+
+                switch (position){
+                    case 0:
+                        jogadas.get(position).setPontos(jogadaDeUm);
+                        repo.setJogadaDeUm(jogadaDeUm);
+                        break;
+
+                    case 1:
+                        jogadas.get(position).setPontos(jogadaDeDois);
+                        repo.setJogadaDeDois(jogadaDeDois);
+                        break;
+
+                    case 2:
+                        jogadas.get(position).setPontos(jogadaDeTres);
+                        repo.setJogadaDeTres(jogadaDeTres);
+                        break;
+
+                    case 3:
+                        jogadas.get(position).setPontos(jogadaDeQuatro);
+                        repo.setJogadaDeQuatro(jogadaDeQuatro);
+                        break;
+
+                    case 4:
+                        jogadas.get(position).setPontos(jogadaDeCinco);
+                        repo.setJogadaDeCinco(jogadaDeCinco);
+                        break;
+
+                    case 5:
+                        jogadas.get(position).setPontos(jogadaDeSeis);
+                        repo.setJogadaDeSeis(jogadaDeSeis);
+                        break;
+
+                    case 6:
+                        jogadas.get(position).setPontos(trinca);
+                        repo.setTrinca(trinca);
+                        break;
+
+                    case 7:
+                        jogadas.get(position).setPontos(quadra);
+                        repo.setQuadra(quadra);
+                        break;
+
+                    case 8:
+                        jogadas.get(position).setPontos(fullhouse);
+                        repo.setFullhouse(fullhouse);
+                        break;
+
+                    case 9:
+                        jogadas.get(position).setPontos(sequenciaAlta);
+                        repo.setSequenciaAlta(sequenciaAlta);
+                        break;
+
+                    case 10:
+                        jogadas.get(position).setPontos(sequenciaBaixa);
+                        repo.setSequenciaBaixa(sequenciaBaixa);
+                        break;
+
+                    case 11:
+                        jogadas.get(position).setPontos(general);
+                        repo.setGeneral(general);
+                        break;
+                }
+
+                jogadaAdapter = new JogadaAdapter(jogadas, listenerJogadas);
+                recyclerViewJogadas.setAdapter(jogadaAdapter);
+
+            }
+        };
+
 
     }
 
@@ -86,71 +180,72 @@ public class MainActivity extends AppCompatActivity {
         jogadas.add(new Jogada("Sequencia Baixa: "));
         jogadas.add(new Jogada("General: "));
 
+        //sharedpreferences aqui testa null no início
+
     }
 
     public void lancar(View view){
+        if (contadorLancamentos <3) {
+            contadorLancamentos++;
 
-        //lança os dados
-        Random rand = new Random();
-        for (int i = 0; i < 5; i++) {
-            Integer valor = rand.nextInt(6);
-            dados.set(i,valor+1);
+            //lança os dados
+            Random rand = new Random();
+            for (int i = 0; i < 5; i++) {
+                Integer valor = rand.nextInt(6);
+                dados.set(i, valor + 1);
+            }
+
+            CalculaJogadas calculaJogadas = new CalculaJogadas(dados);
+
+            //atualiza os dados
+            dadosAdapter = new DadosAdapter(dados, listenerDados);
+            recyclerViewDados.setAdapter(dadosAdapter);
+
+
+            // calcula as possíveis jogadas
+            jogadaDeUm = calculaJogadas.jogadaNum(1);
+
+            jogadaDeDois = calculaJogadas.jogadaNum(2);
+
+            jogadaDeTres = calculaJogadas.jogadaNum(3);
+
+            jogadaDeQuatro = calculaJogadas.jogadaNum(4);
+
+            jogadaDeCinco = calculaJogadas.jogadaNum(5);
+
+            jogadaDeSeis = calculaJogadas.jogadaNum(6);
+
+            trinca = calculaJogadas.trinca();
+
+            quadra = calculaJogadas.quadra();
+
+            fullhouse = calculaJogadas.fullHouse();
+
+            sequenciaAlta = calculaJogadas.sequenciaAlta();
+
+            sequenciaBaixa = calculaJogadas.sequenciaBaixa();
+
+            general = calculaJogadas.general();
+
+
+            // coloca os pontos para visualização nas Jogadas
+            jogadas.get(0).setVisualisaPontos(jogadaDeUm);
+            jogadas.get(1).setVisualisaPontos(jogadaDeDois);
+            jogadas.get(2).setVisualisaPontos(jogadaDeTres);
+            jogadas.get(3).setVisualisaPontos(jogadaDeQuatro);
+            jogadas.get(4).setVisualisaPontos(jogadaDeCinco);
+            jogadas.get(5).setVisualisaPontos(jogadaDeSeis);
+            jogadas.get(6).setVisualisaPontos(trinca);
+            jogadas.get(7).setVisualisaPontos(quadra);
+            jogadas.get(8).setVisualisaPontos(fullhouse);
+            jogadas.get(9).setVisualisaPontos(sequenciaAlta);
+            jogadas.get(10).setVisualisaPontos(sequenciaBaixa);
+            jogadas.get(11).setVisualisaPontos(general);
+
+            //apresenta os pontos para visualização para o usuário
+            jogadaAdapter = new JogadaAdapter(jogadas, listenerJogadas);
+            recyclerViewJogadas.setAdapter(jogadaAdapter);
         }
-
-        CalculaJogadas calculaJogadas = new CalculaJogadas(dados);
-
-        //atualiza os dados
-        dadosAdapter = new DadosAdapter(dados,listenerDados);
-        recyclerViewDados.setAdapter(dadosAdapter);
-
-
-
-        // calcula as possíveis jogadas
-        int jogadaDeUm = calculaJogadas.jogadaNum(1);
-
-        int jogadaDeDois = calculaJogadas.jogadaNum(2);
-
-        int jogadaDeTres = calculaJogadas.jogadaNum(3);
-
-        int jogadaDeQuatro = calculaJogadas.jogadaNum(4);
-
-        int jogadaDeCinco = calculaJogadas.jogadaNum(5);
-
-        int jogadaDeSeis = calculaJogadas.jogadaNum(6);
-
-        int trinca = calculaJogadas.trinca();
-
-        int quadra = calculaJogadas.quadra();
-
-        int fullhouse = calculaJogadas.fullHouse();
-
-        int sequenciaAlta = calculaJogadas.sequenciaAlta();
-
-        int sequenciaBaixa = calculaJogadas.sequenciaBaixa();
-
-        int general = calculaJogadas.general();
-
-
-        // coloca os pontos para visualização nas Jogadas
-        jogadas.get(0).setVisualisaPontos(jogadaDeUm);
-        jogadas.get(1).setVisualisaPontos(jogadaDeDois);
-        jogadas.get(2).setVisualisaPontos(jogadaDeTres);
-        jogadas.get(3).setVisualisaPontos(jogadaDeQuatro);
-        jogadas.get(4).setVisualisaPontos(jogadaDeCinco);
-        jogadas.get(5).setVisualisaPontos(jogadaDeSeis);
-        jogadas.get(6).setVisualisaPontos(trinca);
-        jogadas.get(7).setVisualisaPontos(quadra);
-        jogadas.get(8).setVisualisaPontos(fullhouse);
-        jogadas.get(9).setVisualisaPontos(sequenciaAlta);
-        jogadas.get(10).setVisualisaPontos(sequenciaBaixa);
-        jogadas.get(11).setVisualisaPontos(general);
-
-        //apresenta os pontos para visualização para o usuário
-        jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
-        recyclerViewJogadas.setAdapter(jogadaAdapter);
-
-
-
     }
 
 

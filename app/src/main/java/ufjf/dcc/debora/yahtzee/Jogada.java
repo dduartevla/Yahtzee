@@ -20,7 +20,7 @@ public class Jogada {
     }
 
     public void setPontos(Integer pontos) {
-        this.pontos = pontos;
+        this.pontos += pontos;
     }
 
     public void setVisualisaPontos(Integer pontos) {this.visualisaPontos = pontos;}

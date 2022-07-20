@@ -58,11 +58,26 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
             textViewPontos = itemView.findViewById(R.id.textViewPontos);
             textViewCalculaPontos = itemView.findViewById(R.id.textViewCalculoPontos);
             checkBoxJogar = itemView.findViewById(R.id.checkBoxJogar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onJogadaClick(v,getAdapterPosition());
+                }
+            });
+
+            itemView.findViewById(R.id.checkBoxJogar).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onCheckBoxClick(v,getAdapterPosition());
+                }
+            });
         }
     }
 
     public interface OnJogadaClickListener{
         void onJogadaClick(View view,int position);
+        void onCheckBoxClick(View view, int position);
     }
 }
 
