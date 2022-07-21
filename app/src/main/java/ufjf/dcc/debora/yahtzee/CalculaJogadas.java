@@ -9,9 +9,9 @@ public class CalculaJogadas {
 
     int[] dados = new int[5];
 
-    public CalculaJogadas(List<Integer> Ldados){
+    public CalculaJogadas(List<Dado> Ldados){
         for (int i=0; i<Ldados.size();i++){
-            this.dados[i] = Ldados.get(i);
+            this.dados[i] = Ldados.get(i).valor;
         }
 
     }

@@ -84,6 +84,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
                 public void onClick(View v) {
                     listener.onJogadaClick(v,getAdapterPosition());
 
+
                 }
 
                 public void desabilita(View v){

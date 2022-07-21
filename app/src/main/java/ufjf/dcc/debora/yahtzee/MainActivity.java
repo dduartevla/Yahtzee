@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewJogadas;
     private RecyclerView recyclerViewDados;
-    private List<Integer> dados;
+    private List<Dado> dados;
     private List<Jogada> jogadas;
     private JogadasRepositorio repo;
     private Button buttonLancar;
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     int contadorLancamentos = 0;
 
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
         repo = new JogadasRepositorio(getApplicationContext());
         criaJogadas();
-        dados = new ArrayList<Integer>();
+        dados = new ArrayList<Dado>();
         iniciaDados();
-        System.out.println(dados.size());
+        //System.out.println(dados.size());
+
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
 
@@ -76,9 +78,34 @@ public class MainActivity extends AppCompatActivity {
 
         layoutManagerDados = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,true);
         recyclerViewDados.setLayoutManager(layoutManagerDados);
+
+        //listener de dados
+        listenerDados = new DadosAdapter.OnDadosClickListener() {
+            @Override
+            public void onDadosClick(View view, int position, View imageView) {
+
+                if (contaDadosTravados() < 4) {
+
+                    if (dados.get(position).travado == false) {
+                        dados.get(position).travado = true;
+                    } else {
+                        dados.get(position).travado = false;
+                    }
+
+                    if (dados.get(position).travado == false) {
+                        imageView.setVisibility(View.INVISIBLE);
+                    } else {
+                        imageView.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            }
+        };
+
         dadosAdapter = new DadosAdapter(dados,listenerDados);
         recyclerViewDados.setAdapter(dadosAdapter);
 
+        //listener de Jogadas
         listenerJogadas = new JogadaAdapter.OnJogadaClickListener() {
             @Override
             public void onJogadaClick(View view, int position) {
@@ -182,6 +209,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private int contaDadosTravados(){
+        int cont = 0;
+        for (int i=0; i<dados.size(); i++){
+            if (dados.get(i).travado ==true)
+                cont++;
+        }
+       return cont;
+    }
+
     private void iniciaViewClicked(){
         for (int i=0; i<viewClicked.length; i++){
             viewClicked[i] = false;
@@ -189,14 +225,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void iniciaDados(){
+
         for (int i=0; i<5;i++){
-            dados.add(1);
+            Dado novoDado = new Dado();
+            dados.add(novoDado);
         }
     }
 
-    public void tempImprimeDados(){
-        for(int i=0; i<dados.size();i++){
-            System.out.println(dados.get(i) + "temp");
+    public void tempImprimeDados(List coisas){
+        for(int i=0; i<coisas.size();i++){
+            System.out.println(coisas.get(i) + "temp " +i);
         }
     }
 
@@ -233,14 +271,15 @@ public class MainActivity extends AppCompatActivity {
             Random rand = new Random();
             for (int i = 0; i < 5; i++) {
                 Integer valor = rand.nextInt(6);
-                dados.set(i, valor + 1);
+                if (dados.get(i).travado == false)
+                    dados.get(i).valor = valor + 1;
+
             }
 
             CalculaJogadas calculaJogadas = new CalculaJogadas(dados);
 
             //atualiza os dados
-            dadosAdapter = new DadosAdapter(dados, listenerDados);
-            recyclerViewDados.setAdapter(dadosAdapter);
+            dadosAdapter.notifyDataSetChanged();
 
 
             // calcula as possíveis jogadas

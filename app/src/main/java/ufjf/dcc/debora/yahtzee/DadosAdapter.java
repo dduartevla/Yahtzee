@@ -13,10 +13,11 @@ import java.util.List;
 
 public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHolder> {
 
-    private List<Integer> dados;
+    private List<Dado> dados;
     private DadosAdapter.OnDadosClickListener listener;
+    private DadosAdapter.DadosViewHolder viewHolder;
 
-    public DadosAdapter(List<Integer> dados, DadosAdapter.OnDadosClickListener listener) {
+    public DadosAdapter(List<Dado> dados, DadosAdapter.OnDadosClickListener listener) {
         this.dados = dados;
         System.out.println(dados.size());
         this.listener = listener;
@@ -28,15 +29,14 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
         Context contexto = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(contexto);
         View dadosView = inflater.inflate(R.layout.dado_layout,parent,false);
-        DadosAdapter.DadosViewHolder viewHolder = new DadosAdapter.DadosViewHolder(dadosView);
+        viewHolder = new DadosAdapter.DadosViewHolder(dadosView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull DadosAdapter.DadosViewHolder holder, int position) {
-        //for (int i=0; i<dados.size();i++){
 
-            switch (dados.get(position)){
+            switch (dados.get(position).valor) {
                 case 1:
                     holder.imageViewDado.setImageResource(R.drawable.d1);
                     break;
@@ -61,7 +61,6 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
                     holder.imageViewDado.setImageResource(R.drawable.d6);
                     break;
             }
-        //}
 
     }
 
@@ -70,19 +69,25 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
         return 5;
     }
 
+    public DadosViewHolder getViewHolder() {
+        return viewHolder;
+    }
+
     public class DadosViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageViewDado;
+        ImageView imageViewFiltro;
 
         public DadosViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageViewDado= itemView.findViewById(R.id.imageViewDado);
+            imageViewFiltro = itemView.findViewById(R.id.imageViewFiltro);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   listener.onDadosClick(v, getAdapterPosition());
+                   listener.onDadosClick(v, getAdapterPosition(), imageViewFiltro);
                 }
             });
 
@@ -90,7 +95,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
     }
 
     public interface OnDadosClickListener{
-        void onDadosClick(View view,int position);
+        void onDadosClick(View view,int position, View imageView);
 
     }
 }
