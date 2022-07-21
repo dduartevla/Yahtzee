@@ -17,6 +17,9 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewPontos;
+    private TextView textViewJogadasRestantes;
+    private TextView textViewLancamentosRestantes;
+
 
     private RecyclerView recyclerViewJogadas;
     private RecyclerView recyclerViewDados;
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     int sequenciaBaixa;
     int general;
 
-    int contadorLancamentos = 0;
+    int contadorLancamentos = 3;
+    int contadorJogadas = 13;
 
 
     @SuppressLint("WrongViewCast")
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewPontos = findViewById(R.id.textViewPontosMain);
+        textViewJogadasRestantes = findViewById(R.id.textViewJogadas);
+        textViewLancamentosRestantes = findViewById(R.id.textViewLancamentos);
 
         viewClicked = new boolean[13];
         iniciaViewClicked();
@@ -64,10 +70,14 @@ public class MainActivity extends AppCompatActivity {
         buttonLancar = findViewById(R.id.buttonLancar);
 
         repo = new JogadasRepositorio(getApplicationContext());
+
+        textViewPontos.setText(repo.getPontos().toString());
+        textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
+        textViewLancamentosRestantes.setText(repo.getLancamentosRestantes().toString());
+
         criaJogadas();
         dados = new ArrayList<Dado>();
         iniciaDados();
-        //System.out.println(dados.size());
 
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
@@ -110,7 +120,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onJogadaClick(View view, int position) {
 
-                contadorLancamentos = 0;
+                repo.setLancamentosRestantes(3);
+                repo.decJogadasRestantes();
+
+                textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
+
+                iniciaDados(); //reinicia os dados, mas não muda as imagens
+                destravaDados(); //destrava os dados travados
+
+                //reinicia o recylerView dos dados
+                dadosAdapter = new DadosAdapter(dados,listenerDados);
+                recyclerViewDados.setAdapter(dadosAdapter);
 
                 if (viewClicked[position] == true){ // impede mais de um clicque na mesma jogada
                     //lançar mensagem para usuário aqui
@@ -224,6 +244,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void destravaDados(){
+        for (int i=0; i<dados.size(); i++){
+            dados.get(i).travado = false;
+        }
+    }
+
     private void iniciaDados(){
 
         for (int i=0; i<5;i++){
@@ -264,8 +290,9 @@ public class MainActivity extends AppCompatActivity {
             jogadaAdapter.setClickable(true);
         }
 
-        if (contadorLancamentos <3) {
-            contadorLancamentos++;
+        if (repo.getLancamentosRestantes() > 0) {
+            repo.decLancamentosRestantes();
+            textViewLancamentosRestantes.setText(repo.getLancamentosRestantes().toString());
 
             //lança os dados
             Random rand = new Random();

@@ -24,12 +24,17 @@ public class JogadasRepositorio {
     private final String GENERAL_KEY = "GENERAL_KEY";
     private final String PONTOS_KEY = "PONTOS_KEY";
     private final String NOME_JOGADOR_KEY = "NOME_JOGADOR_KEY";
+    private final String JOGADAS_RESTANTES_KEY = "JOGADAS_RESTANTES_KEY";
+    private final String LANCAMENTOS_RESTANTES_KEY = "LANCAMENTOS_RESTANTES_KEY";
 
 
     //esquece vou ter que fazer uma por uma
     public JogadasRepositorio(Context context){
         this.context = context;
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+        setJogadasRestantes(13);
+        setLancamentosRestantes(3);
     }
 
     // gets
@@ -86,9 +91,49 @@ public class JogadasRepositorio {
 
     public String getNome() {return preferences.getString(NOME_JOGADOR_KEY, " ");}
 
+    public Integer getJogadasRestantes() {return preferences.getInt(JOGADAS_RESTANTES_KEY,0);}
+
+    public Integer getLancamentosRestantes() {return preferences.getInt(LANCAMENTOS_RESTANTES_KEY,0);}
+
 
 
     //Sets
+
+    public  void setJogadasRestantes(int jogadasRestantes){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(JOGADAS_RESTANTES_KEY,jogadasRestantes);
+        editor.apply();
+    }
+
+    public void setLancamentosRestantes(int lancamentosRestantes){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(LANCAMENTOS_RESTANTES_KEY,lancamentosRestantes);
+        editor.apply();
+    }
+
+    public void incJogadasRestantes(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(JOGADAS_RESTANTES_KEY,getJogadasRestantes()+1);
+        editor.apply();
+    }
+
+    public void decJogadasRestantes(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(JOGADAS_RESTANTES_KEY,getJogadasRestantes()-1);
+        editor.apply();
+    }
+
+    public void incLancamentosRestantes(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(LANCAMENTOS_RESTANTES_KEY,getLancamentosRestantes()+1);
+        editor.apply();
+    }
+
+    public void decLancamentosRestantes(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(LANCAMENTOS_RESTANTES_KEY,getLancamentosRestantes()-1);
+        editor.apply();
+    }
 
     public void setNome(String nome){
         SharedPreferences.Editor editor = preferences.edit();

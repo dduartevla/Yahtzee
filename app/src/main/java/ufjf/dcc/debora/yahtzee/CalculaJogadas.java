@@ -10,7 +10,7 @@ public class CalculaJogadas {
     int[] dados = new int[5];
 
     public CalculaJogadas(List<Dado> Ldados){
-        for (int i=0; i<Ldados.size();i++){
+        for (int i=0; i<dados.length;i++){
             this.dados[i] = Ldados.get(i).valor;
         }
 

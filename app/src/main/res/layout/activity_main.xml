@@ -53,6 +53,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textViewLancamentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewJogador"
+        app:layout_constraintStart_toEndOf="@+id/textViewLancamentosRestantes" />
+
+    <TextView
+        android:id="@+id/textViewJogadas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewJogadasRestantes"
+        app:layout_constraintStart_toEndOf="@+id/textViewJogadasRestantes" />
+
+    <TextView
         android:id="@+id/textViewJogador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,5 +81,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPontosMain" />
+
+    <TextView
+        android:id="@+id/textViewLancamentosRestantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Lançamentos: "
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewLancamentos"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewJogadasRestantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Jogadas: "
+        app:layout_constraintBottom_toTopOf="@+id/textViewLancamentosRestantes"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
