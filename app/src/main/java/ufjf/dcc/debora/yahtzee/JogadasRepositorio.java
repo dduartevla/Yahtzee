@@ -100,6 +100,7 @@ public class JogadasRepositorio {
     public void incPontos(int pontos){
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(PONTOS_KEY, getPontos()+pontos);
+        System.out.println(getPontos()+pontos + "repoPontos");
         editor.apply();
         editor.apply();
     }

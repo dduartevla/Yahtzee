@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -77,7 +76,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         public JogadaViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewJogadaNome = itemView.findViewById(R.id.textViewJogadaNome);
-            textViewPontos = itemView.findViewById(R.id.textViewPontos);
+            textViewPontos = itemView.findViewById(R.id.textViewPontosMain);
             textViewCalculaPontos = itemView.findViewById(R.id.textViewCalculoPontos);
 
             itemView.setOnClickListener(new View.OnClickListener() {

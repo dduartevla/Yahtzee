@@ -8,12 +8,15 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView textViewPontos;
 
     private RecyclerView recyclerViewJogadas;
     private RecyclerView recyclerViewDados;
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textViewPontos = findViewById(R.id.textViewPontosMain);
+
         viewClicked = new boolean[13];
         iniciaViewClicked();
 
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewJogadas.setLayoutManager(layoutManagerJogada);
 
 
-        layoutManagerDados = new LinearLayoutManager(this);
+        layoutManagerDados = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,true);
         recyclerViewDados.setLayoutManager(layoutManagerDados);
         dadosAdapter = new DadosAdapter(dados,listenerDados);
         recyclerViewDados.setAdapter(dadosAdapter);
@@ -89,63 +94,76 @@ public class MainActivity extends AppCompatActivity {
                         case 0:
                             jogadas.get(position).setPontos(jogadaDeUm);
                             repo.setJogadaDeUm(jogadaDeUm);
+                            repo.incPontos(jogadaDeUm);
                             break;
 
                         case 1:
                             jogadas.get(position).setPontos(jogadaDeDois);
                             repo.setJogadaDeDois(jogadaDeDois);
+                            repo.incPontos(jogadaDeDois);
                             break;
 
                         case 2:
                             jogadas.get(position).setPontos(jogadaDeTres);
                             repo.setJogadaDeTres(jogadaDeTres);
+                            repo.incPontos(jogadaDeTres);
                             break;
 
                         case 3:
                             jogadas.get(position).setPontos(jogadaDeQuatro);
                             repo.setJogadaDeQuatro(jogadaDeQuatro);
+                            repo.incPontos(jogadaDeQuatro);
                             break;
 
                         case 4:
                             jogadas.get(position).setPontos(jogadaDeCinco);
                             repo.setJogadaDeCinco(jogadaDeCinco);
+                            repo.incPontos(jogadaDeCinco);
                             break;
 
                         case 5:
                             jogadas.get(position).setPontos(jogadaDeSeis);
                             repo.setJogadaDeSeis(jogadaDeSeis);
+                            repo.incPontos(jogadaDeSeis);
                             break;
 
                         case 6:
                             jogadas.get(position).setPontos(trinca);
                             repo.setTrinca(trinca);
+                            repo.incPontos(trinca);
                             break;
 
                         case 7:
                             jogadas.get(position).setPontos(quadra);
                             repo.setQuadra(quadra);
+                            repo.incPontos(quadra);
                             break;
 
                         case 8:
                             jogadas.get(position).setPontos(fullhouse);
                             repo.setFullhouse(fullhouse);
+                            repo.incPontos(fullhouse);
                             break;
 
                         case 9:
                             jogadas.get(position).setPontos(sequenciaAlta);
                             repo.setSequenciaAlta(sequenciaAlta);
+                            repo.incPontos(sequenciaAlta);
                             break;
 
                         case 10:
                             jogadas.get(position).setPontos(sequenciaBaixa);
                             repo.setSequenciaBaixa(sequenciaBaixa);
+                            repo.incPontos(sequenciaBaixa);
                             break;
 
                         case 11:
                             jogadas.get(position).setPontos(general);
                             repo.setGeneral(general);
+                            repo.incPontos(general);
                             break;
                     }
+                    textViewPontos.setText(repo.getPontos().toString());
                     jogadaAdapter.notifyItemChanged(position);
                     jogadaAdapter.setClickable(false);
                 }
