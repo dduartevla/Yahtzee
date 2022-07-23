@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="430dp"
         android:layout_marginTop="20dp"
+        android:onClick="Reinicia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewJogador" />
@@ -99,5 +100,25 @@
         android:text="Jogadas: "
         app:layout_constraintBottom_toTopOf="@+id/textViewLancamentosRestantes"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewReiniciar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="botaoReiniciarClick"
+        android:text="Reiniciar"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewJogador"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewJogador" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

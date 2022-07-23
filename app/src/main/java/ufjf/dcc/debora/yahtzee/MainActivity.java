@@ -1,14 +1,17 @@
 package ufjf.dcc.debora.yahtzee;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
         textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
         textViewLancamentosRestantes.setText(repo.getLancamentosRestantes().toString());
 
-        criaJogadas();
+
         dados = new ArrayList<Dado>();
         iniciaDados();
+        setJogadasRepo();
+        criaJogadas();
 
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         //listener de Jogadas
         listenerJogadas = new JogadaAdapter.OnJogadaClickListener() {
             @Override
-            public void onJogadaClick(View view, int position) {
+            public void onJogadaClick(View view, int position, TextView textViewJ) {
 
                 repo.setLancamentosRestantes(3);
                 repo.decJogadasRestantes();
@@ -126,93 +131,110 @@ public class MainActivity extends AppCompatActivity {
                 textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
 
                 iniciaDados(); //reinicia os dados, mas não muda as imagens
-                destravaDados(); //destrava os dados travados
-
-                //reinicia o recylerView dos dados
                 dadosAdapter = new DadosAdapter(dados,listenerDados);
                 recyclerViewDados.setAdapter(dadosAdapter);
 
-                if (viewClicked[position] == true){ // impede mais de um clicque na mesma jogada
-                    //lançar mensagem para usuário aqui
+                //reinicia o recylerView dos dados
+                dadosAdapter.notifyDataSetChanged();
+
+                if (jogadas.get(position).isLancada() == true){ // impede mais de um clicque na mesma jogada
+                    Toast.makeText(MainActivity.this,"Jogada já marcada!" ,Toast.LENGTH_SHORT).show();
                 } else {
-                    viewClicked[position] = true;
+                    jogadas.get(position).setLancada(true);
 
                     switch (position) {
                         case 0:
                             jogadas.get(position).setPontos(jogadaDeUm);
                             repo.setJogadaDeUm(jogadaDeUm);
                             repo.incPontos(jogadaDeUm);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeUm + " pontos na Jogada de Um." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 1:
                             jogadas.get(position).setPontos(jogadaDeDois);
                             repo.setJogadaDeDois(jogadaDeDois);
                             repo.incPontos(jogadaDeDois);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeDois + " pontos na Jogada de Dois." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 2:
                             jogadas.get(position).setPontos(jogadaDeTres);
                             repo.setJogadaDeTres(jogadaDeTres);
                             repo.incPontos(jogadaDeTres);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeTres + " pontos na Jogada de Três." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 3:
                             jogadas.get(position).setPontos(jogadaDeQuatro);
                             repo.setJogadaDeQuatro(jogadaDeQuatro);
                             repo.incPontos(jogadaDeQuatro);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeQuatro + " pontos na Jogada de Quatro." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 4:
                             jogadas.get(position).setPontos(jogadaDeCinco);
                             repo.setJogadaDeCinco(jogadaDeCinco);
                             repo.incPontos(jogadaDeCinco);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeCinco + " pontos na Jogada de Cinco." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 5:
                             jogadas.get(position).setPontos(jogadaDeSeis);
                             repo.setJogadaDeSeis(jogadaDeSeis);
                             repo.incPontos(jogadaDeSeis);
+                            Toast.makeText(MainActivity.this,"Você marcou " + jogadaDeSeis + " pontos na Jogada de Seis." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 6:
                             jogadas.get(position).setPontos(trinca);
                             repo.setTrinca(trinca);
                             repo.incPontos(trinca);
+                            Toast.makeText(MainActivity.this,"Você marcou " + trinca + " pontos na jagada Trinca." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 7:
                             jogadas.get(position).setPontos(quadra);
                             repo.setQuadra(quadra);
                             repo.incPontos(quadra);
+                            Toast.makeText(MainActivity.this,"Você marcou " + quadra + " pontos na jogada Quadra." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 8:
                             jogadas.get(position).setPontos(fullhouse);
                             repo.setFullhouse(fullhouse);
                             repo.incPontos(fullhouse);
+                            Toast.makeText(MainActivity.this,"Você marcou " + fullhouse + " pontos na jogada Full-House." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 9:
                             jogadas.get(position).setPontos(sequenciaAlta);
                             repo.setSequenciaAlta(sequenciaAlta);
                             repo.incPontos(sequenciaAlta);
+                            Toast.makeText(MainActivity.this,"Você marcou " + sequenciaAlta + " pontos na jogada Sequência Alta." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 10:
                             jogadas.get(position).setPontos(sequenciaBaixa);
                             repo.setSequenciaBaixa(sequenciaBaixa);
                             repo.incPontos(sequenciaBaixa);
+                            Toast.makeText(MainActivity.this,"Você marcou " + sequenciaBaixa + " pontos na jogada Sequência Baixa." ,Toast.LENGTH_SHORT).show();
                             break;
 
                         case 11:
                             jogadas.get(position).setPontos(general);
                             repo.setGeneral(general);
                             repo.incPontos(general);
+                            Toast.makeText(MainActivity.this,"Você marcou " + general + " pontos na jogada General." ,Toast.LENGTH_SHORT).show();
                             break;
                     }
+
                     textViewPontos.setText(repo.getPontos().toString());
+                    textViewJ.setText("X");
                     jogadaAdapter.notifyItemChanged(position);
                     jogadaAdapter.setClickable(false);
+                    if (repo.getJogadasRestantes() == 0){
+                        reinicia();
+                    }
                 }
 
             }
@@ -226,6 +248,66 @@ public class MainActivity extends AppCompatActivity {
 
         jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
         recyclerViewJogadas.setAdapter(jogadaAdapter);
+
+    }
+
+    public void setJogadasRepo(){
+         jogadaDeUm = repo.getJogadaDeUm();
+         jogadaDeDois = repo.getJogadaDeDois();
+         jogadaDeTres = repo.getJogadaDeTres();
+         jogadaDeQuatro = repo.getJogadaDeQuatro();
+         jogadaDeCinco = repo.getJogadaDeCinco();
+         jogadaDeSeis = repo.getJogadaDeSeis();
+         trinca = repo.getTrinca();
+         quadra = repo.getQuadra();
+         fullhouse = repo.getFullhouse();
+         sequenciaAlta = repo.getSequenciaAlta();
+         sequenciaBaixa = repo.getSequenciaBaixa();
+         general = repo.getGeneral();
+
+    }
+
+    public void botaoReiniciarClick(View view){
+        reinicia();
+    }
+
+    public void reinicia(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Reiniciar o Jogo");
+        dialogBuilder.setMessage("Deseja reiniciar o jogo?");
+        dialogBuilder.setPositiveButton("Reiniciar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        iniciaJogo();
+                    }
+                }
+        );
+        dialogBuilder.create();
+        dialogBuilder.show();
+    }
+
+    private void iniciaJogo(){
+        repo.limpaRepositorio();
+        System.out.println(repo.getJogadaDeUm());
+        jogadas.clear();
+        setJogadasRepo();
+        criaJogadas();
+        dados.clear();
+        iniciaDados();
+
+
+        jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
+        recyclerViewJogadas.setAdapter(jogadaAdapter);
+
+        textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
+        textViewLancamentosRestantes.setText(repo.getLancamentosRestantes().toString());
+        textViewPontos.setText(repo.getPontos().toString());
+
+
+        if (jogadaAdapter.getClickable() == false){
+            jogadaAdapter.setClickable(true);
+        }
 
     }
 
@@ -267,18 +349,18 @@ public class MainActivity extends AppCompatActivity {
     public void criaJogadas(){
         jogadas = new ArrayList<Jogada>();
 
-        jogadas.add(new Jogada("Jogada de 1: "));
-        jogadas.add(new Jogada("Jogada de 2: "));
-        jogadas.add(new Jogada("Jogada de 3: "));
-        jogadas.add(new Jogada("Jogada de 4: "));
-        jogadas.add(new Jogada("Jogada de 5: "));
-        jogadas.add(new Jogada("Jogada de 6: "));
-        jogadas.add(new Jogada("Trinca: "));
-        jogadas.add(new Jogada("Quadra: "));
-        jogadas.add(new Jogada("Full-House: "));
-        jogadas.add(new Jogada("Sequencia Alta: "));
-        jogadas.add(new Jogada("Sequencia Baixa: "));
-        jogadas.add(new Jogada("General: "));
+        jogadas.add(new Jogada("Jogada de 1: ", jogadaDeUm));
+        jogadas.add(new Jogada("Jogada de 2: ", jogadaDeDois));
+        jogadas.add(new Jogada("Jogada de 3: ", jogadaDeTres));
+        jogadas.add(new Jogada("Jogada de 4: ", jogadaDeQuatro));
+        jogadas.add(new Jogada("Jogada de 5: ", jogadaDeCinco));
+        jogadas.add(new Jogada("Jogada de 6: ", jogadaDeSeis));
+        jogadas.add(new Jogada("Trinca: ", trinca));
+        jogadas.add(new Jogada("Quadra: ", quadra));
+        jogadas.add(new Jogada("Full-House: ", fullhouse));
+        jogadas.add(new Jogada("Sequencia Alta: ", sequenciaAlta));
+        jogadas.add(new Jogada("Sequencia Baixa: ", sequenciaBaixa));
+        jogadas.add(new Jogada("General: ", general));
 
         //sharedpreferences aqui testa null no início
 
@@ -350,9 +432,7 @@ public class MainActivity extends AppCompatActivity {
             jogadas.get(11).setVisualisaPontos(general);
 
             //apresenta os pontos para visualização para o usuário
-            for (int i=0; i<jogadas.size(); i++){
-                jogadaAdapter.notifyItemChanged(i);
-            }
+            jogadaAdapter.notifyDataSetChanged();
 
         }
     }

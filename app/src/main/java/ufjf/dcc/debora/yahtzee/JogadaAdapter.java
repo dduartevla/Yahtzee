@@ -82,8 +82,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onJogadaClick(v,getAdapterPosition());
-
+                    listener.onJogadaClick(v,getAdapterPosition(),textViewCalculaPontos);
 
                 }
 
@@ -98,7 +97,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
     }
 
     public interface OnJogadaClickListener{
-        void onJogadaClick(View view,int position);
+        void onJogadaClick(View view,int position, TextView textView);
         void setCliclableView(View view, int position);
     }
 }

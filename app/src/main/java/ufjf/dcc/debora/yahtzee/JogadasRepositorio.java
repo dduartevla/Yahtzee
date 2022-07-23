@@ -28,13 +28,58 @@ public class JogadasRepositorio {
     private final String LANCAMENTOS_RESTANTES_KEY = "LANCAMENTOS_RESTANTES_KEY";
 
 
-    //esquece vou ter que fazer uma por uma
+
     public JogadasRepositorio(Context context){
         this.context = context;
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         setJogadasRestantes(13);
         setLancamentosRestantes(3);
+    }
+
+    //limparepositorio
+
+    public void limpaRepositorio(){
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+        /*
+        setJogadasRestantes(13);
+        setLancamentosRestantes(3);
+        zeraPontos();
+
+
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(JOGADA_DE_UM_KEY, 0);
+        editor.apply();
+        editor.putInt(JOGADA_DE_DOIS_KEY, 0);
+        editor.apply();
+        editor.putInt(JOGADA_DE_TRES_KEY, 0);
+        editor.apply();
+        editor.putInt(JOGADA_DE_QUATRO_KEY, 0);
+        editor.apply();
+        editor.putInt(JOGADA_DE_CINCO_KEY, 0);
+        editor.apply();
+        editor.putInt(JOGADA_DE_SEIS_KEY, 0);
+        editor.apply();
+        editor.putInt(TRINCA_KEY, 0);
+        editor.apply();
+        editor.putInt(QUADRA_KEY, 0);
+        editor.apply();
+        editor.putInt(FULLHOUSE_KEY, 0);
+        editor.apply();
+        editor.putInt(SEQUENCIA_ALTA_KEY, 0);
+        editor.apply();
+        editor.putInt(SEQUENCIA_BAIXA_KEY, 0);
+        editor.apply();
+        editor.putInt(GENERAL_KEY, 0);
+        editor.apply();
+
+         */
+
+
     }
 
     // gets
@@ -98,6 +143,12 @@ public class JogadasRepositorio {
 
 
     //Sets
+
+    public void zeraPontos(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PONTOS_KEY,0);
+        editor.apply();
+    }
 
     public  void setJogadasRestantes(int jogadasRestantes){
         SharedPreferences.Editor editor = preferences.edit();
