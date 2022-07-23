@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewPontos;
     private TextView textViewJogadasRestantes;
     private TextView textViewLancamentosRestantes;
+    private ImageView imageViewFiltroJogadas;
 
 
     private RecyclerView recyclerViewJogadas;
@@ -53,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
     int sequenciaBaixa;
     int general;
 
-    int contadorLancamentos = 3;
-    int contadorJogadas = 13;
-
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPontos = findViewById(R.id.textViewPontosMain);
         textViewJogadasRestantes = findViewById(R.id.textViewJogadas);
         textViewLancamentosRestantes = findViewById(R.id.textViewLancamentos);
+        imageViewFiltroJogadas = findViewById(R.id.imageViewFiltroJogadas);
 
         viewClicked = new boolean[13];
         iniciaViewClicked();
@@ -123,16 +123,25 @@ public class MainActivity extends AppCompatActivity {
         //listener de Jogadas
         listenerJogadas = new JogadaAdapter.OnJogadaClickListener() {
             @Override
-            public void onJogadaClick(View view, int position, TextView textViewJ) {
+            public void onJogadaClick(View view, int position) {
+
+                jogadas.get(position).setLancada(true);
+
+
+
+                imageViewFiltroJogadas.setVisibility(View.VISIBLE);
+                imageViewFiltroJogadas.bringToFront();
 
                 repo.setLancamentosRestantes(3);
                 repo.decJogadasRestantes();
 
                 textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
 
+
                 iniciaDados(); //reinicia os dados, mas não muda as imagens
                 dadosAdapter = new DadosAdapter(dados,listenerDados);
                 recyclerViewDados.setAdapter(dadosAdapter);
+
 
                 //reinicia o recylerView dos dados
                 dadosAdapter.notifyDataSetChanged();
@@ -140,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 if (jogadas.get(position).isLancada() == true){ // impede mais de um clicque na mesma jogada
                     Toast.makeText(MainActivity.this,"Jogada já marcada!" ,Toast.LENGTH_SHORT).show();
                 } else {
-                    jogadas.get(position).setLancada(true);
+
 
                     switch (position) {
                         case 0:
@@ -229,9 +238,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     textViewPontos.setText(repo.getPontos().toString());
-                    textViewJ.setText("X");
                     jogadaAdapter.notifyItemChanged(position);
-                    jogadaAdapter.setClickable(false);
+                    System.out.println(repo.getJogadasRestantes() + "Jogadas Restantes");
                     if (repo.getJogadasRestantes() == 0){
                         reinicia();
                     }
@@ -326,14 +334,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void destravaDados(){
-        for (int i=0; i<dados.size(); i++){
-            dados.get(i).travado = false;
-        }
+    public void destravaDados(View view){
     }
 
     private void iniciaDados(){
-
+        dados.clear();
         for (int i=0; i<5;i++){
             Dado novoDado = new Dado();
             dados.add(novoDado);
@@ -367,6 +372,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lancar(View view){
+
+        imageViewFiltroJogadas.setVisibility(View.GONE);
 
         if (jogadaAdapter.getClickable() == false){
             jogadaAdapter.setClickable(true);

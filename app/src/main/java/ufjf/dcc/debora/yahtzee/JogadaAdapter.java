@@ -43,7 +43,12 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
         Jogada jogada = jogadas.get(position);
         holder.textViewJogadaNome.setText(jogada.getNome().toString());
         holder.textViewPontos.setText(jogada.getPontos().toString());
-        holder.textViewCalculaPontos.setText(" + " + jogada.getVisualisaPontos().toString());
+        if (jogadas.get(position).isLancada() ==true){
+            holder.textViewCalculaPontos.setText("✓");
+        } else {
+            holder.textViewCalculaPontos.setText(" + " + jogada.getVisualisaPontos().toString());
+        }
+
 
         if (!clickable){
             viewHolder.itemView.setClickable(false);
@@ -55,6 +60,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
 
     public void setClickable(boolean clickable) {
         this.clickable = clickable;
+        viewHolder.itemView.setClickable(clickable);
         this.notifyDataSetChanged();
     }
 
@@ -82,7 +88,7 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onJogadaClick(v,getAdapterPosition(),textViewCalculaPontos);
+                    listener.onJogadaClick(v,getAdapterPosition());
 
                 }
 
@@ -92,12 +98,11 @@ public class JogadaAdapter extends RecyclerView.Adapter<JogadaAdapter.JogadaView
             });
 
 
-
         }
     }
 
     public interface OnJogadaClickListener{
-        void onJogadaClick(View view,int position, TextView textView);
+        void onJogadaClick(View view,int position);
         void setCliclableView(View view, int position);
     }
 }
