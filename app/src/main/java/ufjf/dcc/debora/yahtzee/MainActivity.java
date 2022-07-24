@@ -125,23 +125,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onJogadaClick(View view, int position) {
 
-                jogadas.get(position).setLancada(true);
-
-
-
-                imageViewFiltroJogadas.setVisibility(View.VISIBLE);
-                imageViewFiltroJogadas.bringToFront();
-
                 repo.setLancamentosRestantes(3);
                 repo.decJogadasRestantes();
 
                 textViewJogadasRestantes.setText(repo.getJogadasRestantes().toString());
 
-
                 iniciaDados(); //reinicia os dados, mas não muda as imagens
                 dadosAdapter = new DadosAdapter(dados,listenerDados);
                 recyclerViewDados.setAdapter(dadosAdapter);
-
 
                 //reinicia o recylerView dos dados
                 dadosAdapter.notifyDataSetChanged();
@@ -149,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
                 if (jogadas.get(position).isLancada() == true){ // impede mais de um clicque na mesma jogada
                     Toast.makeText(MainActivity.this,"Jogada já marcada!" ,Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     switch (position) {
                         case 0:
                             jogadas.get(position).setPontos(jogadaDeUm);
@@ -240,6 +229,10 @@ public class MainActivity extends AppCompatActivity {
                     textViewPontos.setText(repo.getPontos().toString());
                     jogadaAdapter.notifyItemChanged(position);
                     System.out.println(repo.getJogadasRestantes() + "Jogadas Restantes");
+                    textViewPontos.setText(repo.getPontos().toString());
+                    imageViewFiltroJogadas.setVisibility(View.VISIBLE);
+                    imageViewFiltroJogadas.bringToFront();
+                    jogadas.get(position).setLancada(true);
                     if (repo.getJogadasRestantes() == 0){
                         reinicia();
                     }
