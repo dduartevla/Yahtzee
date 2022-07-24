@@ -1,5 +1,9 @@
 package ufjf.dcc.debora.yahtzee;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +26,12 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActivityResultLauncher<Intent> launcher;
     private TextView textViewPontos;
     private TextView textViewJogadasRestantes;
     private TextView textViewLancamentosRestantes;
     private ImageView imageViewFiltroJogadas;
+    private ImageButton buttonCreditos;
 
 
     private RecyclerView recyclerViewJogadas;
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         textViewJogadasRestantes = findViewById(R.id.textViewJogadas);
         textViewLancamentosRestantes = findViewById(R.id.textViewLancamentos);
         imageViewFiltroJogadas = findViewById(R.id.imageViewFiltroJogadas);
+        buttonCreditos = findViewById(R.id.imageButtonCreditos);
 
         viewClicked = new boolean[13];
         iniciaViewClicked();
@@ -83,6 +92,17 @@ public class MainActivity extends AppCompatActivity {
         iniciaDados();
         setJogadasRepo();
         criaJogadas();
+
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+
+                    }
+                }
+        );
 
         recyclerViewJogadas = findViewById(R.id.recyclerViewJogadas);
         recyclerViewDados = findViewById(R.id.recyclerViewDados);
@@ -437,5 +457,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void buttonCreditosClick(View view){
+
+        Intent intent = new Intent(MainActivity.this, Creditos.class);
+
+        launcher.launch(intent);
+    }
 
 }
