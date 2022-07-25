@@ -4,8 +4,10 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,6 +117,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewDados.setLayoutManager(layoutManagerDados);
 
         //listener de dados
+
+        /*
+        A ideia é colocar o ItemTouchHelper dentro da declaração do listner de Dados
+        Quando implementar OnDadosClick() já coloca o ItemTouchHelper e ao terminar o
+        Swipe usa um notifyDataSetChange() que vai carregar os Dados no local correto já com a
+        trava.
+         */
         listenerDados = new DadosAdapter.OnDadosClickListener() {
             @Override
             public void onDadosClick(View view, int position, View imageView) {
@@ -258,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+
             }
 
             @Override
@@ -270,7 +280,42 @@ public class MainActivity extends AppCompatActivity {
         jogadaAdapter = new JogadaAdapter(jogadas,listenerJogadas);
         recyclerViewJogadas.setAdapter(jogadaAdapter);
 
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(recyclerViewDados);
+
     }
+
+    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            Toast.makeText(MainActivity.this,"Position" + dadosAdapter.getViewHolder().getAdapterPosition(),Toast.LENGTH_SHORT).show();
+
+            if (contaDadosTravados() < 4) {
+
+                if (dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado == false) {
+                    dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado = true;
+                } else {
+                    dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado = false;
+                }
+
+                if (dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado == false) {
+                    dadosAdapter.getViewHolder().imageViewFiltro.setVisibility(View.INVISIBLE);
+                } else {
+                    dadosAdapter.getViewHolder().imageViewFiltro.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            Toast.makeText(MainActivity.this,"Deletado",Toast.LENGTH_SHORT).show();
+
+        }
+    };
 
     public void setJogadasRepo(){
          jogadaDeUm = repo.getJogadaDeUm();
