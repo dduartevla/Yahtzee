@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP | ItemTouchHelper.DOWN) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -294,25 +294,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-            Toast.makeText(MainActivity.this,"Position" + dadosAdapter.getViewHolder().getAdapterPosition(),Toast.LENGTH_SHORT).show();
-
             if (contaDadosTravados() < 4) {
 
-                if (dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado == false) {
-                    dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado = true;
+                if (dados.get(viewHolder.getAdapterPosition()).travado == false) {
+                    dados.get(viewHolder.getAdapterPosition()).travado = true;
+                    //Toast.makeText(MainActivity.this,"Dado " + viewHolder.getAdapterPosition() + " travado!",Toast.LENGTH_SHORT).show();
                 } else {
-                    dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado = false;
+                    dados.get(viewHolder.getAdapterPosition()).travado = false;
+                    //Toast.makeText(MainActivity.this,"Dado " + viewHolder.getAdapterPosition() + " destravado!",Toast.LENGTH_SHORT).show();
                 }
 
-                if (dados.get(dadosAdapter.getViewHolder().getAdapterPosition()).travado == false) {
-                    dadosAdapter.getViewHolder().imageViewFiltro.setVisibility(View.INVISIBLE);
+                if (dados.get(viewHolder.getAdapterPosition()).travado == false) {
+                   viewHolder.itemView.findViewById(R.id.imageViewFiltro).setVisibility(View.INVISIBLE);
                 } else {
-                    dadosAdapter.getViewHolder().imageViewFiltro.setVisibility(View.VISIBLE);
+                    viewHolder.itemView.findViewById(R.id.imageViewFiltro).setVisibility(View.VISIBLE);
                 }
 
             }
 
-            Toast.makeText(MainActivity.this,"Deletado",Toast.LENGTH_SHORT).show();
+            dadosAdapter.notifyDataSetChanged();
 
         }
     };

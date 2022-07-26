@@ -92,6 +92,7 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.DadosViewHol
             });
 
         }
+
     }
 
     public interface OnDadosClickListener{
