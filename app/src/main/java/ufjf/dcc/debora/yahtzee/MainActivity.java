@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this,"Dado " + viewHolder.getAdapterPosition() + " travado!",Toast.LENGTH_SHORT).show();
                 } else {
                     dados.get(viewHolder.getAdapterPosition()).travado = false;
-                    //Toast.makeText(MainActivity.this,"Dado " + viewHolder.getAdapterPosition() + " destravado!",Toast.LENGTH_SHORT).show();
+
                 }
 
                 if (dados.get(viewHolder.getAdapterPosition()).travado == false) {
